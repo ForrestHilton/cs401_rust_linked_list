@@ -1,10 +1,9 @@
-use std::{io::Empty, rc::Rc};
+use std::rc::Rc;
 
 // enum is as large as its largest member
 // &List is likely to put the list on the stack
 // Box means that there is only one pointer
-#[derive(Debug)]
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 enum List {
     Empty,
     Node(i64, Rc<List>),
