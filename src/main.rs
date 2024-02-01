@@ -15,8 +15,8 @@ impl List {
     }
 
     fn len(&self) -> i32 {
-        match self {
-            List::Node(_, next) => next.len() + 1,
+        match *self {
+            List::Node(_, ref next) => next.len() + 1,
             List::Empty => 0,
         }
     }
