@@ -4,6 +4,7 @@ use std::{io::Empty, rc::Rc};
 // &List is likely to put the list on the stack
 // Box means that there is only one pointer
 #[derive(Debug)]
+#[derive(Clone)]
 enum List {
     Empty,
     Node(i64, Rc<List>),
@@ -22,10 +23,7 @@ impl List {
     }
 
     fn pushfront(&self, n1: i64) -> Self {
-        match self {
-            List::Empty => List::Node(n1, Rc::new(List::Empty)),
-            List::Node(n, ptr) =>  List::Node(n1, Rc::new(List::Node(*n, ptr.clone()))),
-        }
+        List::Node(n1, Rc::new(self.clone()))
     }
 }
 
