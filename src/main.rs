@@ -4,25 +4,30 @@ use std::rc::Rc;
 // &List is likely to put the list on the stack
 // Box means that there is only one pointer
 #[derive(Debug, Clone)]
-enum List {
-    Empty,
-    Node(i64, Rc<List>),
+struct List<T:Clone> {
+    link: Option<Rc<Cons<T>>>,
 }
 
-impl List {
+#[derive(Debug, Clone)]
+struct Cons<T:Clone> {
+    val: T,
+    tail: List<T>,
+}
+
+impl List<i64> {
     fn new() -> Self {
-        List::Empty
+        List { link: None }
     }
 
     fn len(&self) -> i32 {
-        match *self {
-            List::Node(_, ref next) => next.len() + 1,
-            List::Empty => 0,
+        match self.link {
+            Some(Rc::new(Cons { val, tail })) => tail.len() + 1,
+            None => 0,
         }
     }
 
     fn pushfront(&self, n1: i64) -> Self {
-        List::Node(n1, Rc::new(self.clone()))
+        List {link : Some(Rc::new(Cons {val : n1, tail : self.clone()} ) ) }
     }
 }
 
