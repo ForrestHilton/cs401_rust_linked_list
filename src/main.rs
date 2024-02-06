@@ -1,8 +1,5 @@
 use std::rc::Rc;
 
-// enum is as large as its largest member
-// &List is likely to put the list on the stack
-// Box means that there is only one pointer
 #[derive(Debug, Clone)]
 struct List<T:Clone> {
     link: Option<Rc<Cons<T>>>,
@@ -21,7 +18,7 @@ impl List<i64> {
 
     fn len(&self) -> i32 {
         match self.link {
-            Some(Rc::new(Cons { val, tail })) => tail.len() + 1,
+            Some(ref cons) => cons.tail.len() + 1,
             None => 0,
         }
     }
@@ -34,7 +31,7 @@ impl List<i64> {
 fn main() {
     let mut lst = List::new();
     lst = lst.pushfront(4);
-    lst = lst.pushfront(5);
     println!("{:?}", lst.len());
+    lst = lst.pushfront(5);
     println!("{:?}", lst.len());
 }
