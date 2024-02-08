@@ -11,7 +11,7 @@ struct Cons<T:Clone> {
     tail: List<T>,
 }
 
-impl List<i64> {
+impl<T:Clone> List<T> {
     fn new() -> Self {
         List { link: None }
     }
@@ -23,7 +23,7 @@ impl List<i64> {
         }
     }
 
-    fn pushfront(&self, n1: i64) -> Self {
+    fn pushfront(&self, n1: T) -> Self {
         List {link : Some(Rc::new(Cons {val : n1, tail : self.clone()} ) ) }
     }
 }
