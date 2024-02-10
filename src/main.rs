@@ -43,12 +43,29 @@ impl<T: Clone> List<T> {
             }
         }
     }
+
+    fn reverse(&self) -> Self {
+        let mut head = List::new();
+        let mut tail = self;
+        loop {
+            match tail.link {
+                Some(ref cons) => {
+                    head = head.pushfront(cons.val.clone());
+                    tail = &cons.tail;
+                }
+                None => break,
+            }
+        }
+        head
+    }
 }
 
 fn main() {
     let mut lst = List::new();
+    lst = lst.pushfront(1);
+    lst = lst.pushfront(2);
+    lst = lst.pushfront(3);
     lst = lst.pushfront(4);
-    println!("{:?}", lst.len());
-    lst = lst.pushfront(5);
-    println!("{:?}", lst.len());
+    println!("{:?}", lst);
+    println!("{:?}", lst.reverse());
 }
